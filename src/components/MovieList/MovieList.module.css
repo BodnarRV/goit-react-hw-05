@@ -1,0 +1,8 @@
+.movie {
+    color: blueviolet;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+     &:hover {
+        color: blue;
+     }
+}

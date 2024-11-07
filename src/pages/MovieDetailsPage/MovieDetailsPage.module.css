@@ -1,0 +1,30 @@
+.backBtn {
+    margin-top: 15px;
+    margin-left: 15px;
+}
+
+.container {
+    margin-top: 15px;
+    margin-left: 15px;
+    display: flex;
+    gap: 15px;
+    max-width: 1200px;
+}
+
+.poster {
+    max-height: 400px;
+}
+
+.additional {
+    margin-top: 15px;
+    margin-left: 15px;
+}
+
+.more {
+    color: blueviolet;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+     &:hover {
+        color: blue;
+     }
+}

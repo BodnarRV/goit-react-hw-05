@@ -1,0 +1,22 @@
+
+.header {
+    background-color: #f1f5fa;
+    padding: 16px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navigation {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .link {
+    text-decoration: none;
+    color: black;
+  }
+  
+  .active {
+    text-decoration: none;
+    color: blue;
+    font-weight: bold;
+  }
