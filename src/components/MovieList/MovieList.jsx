@@ -31,7 +31,7 @@ export default function MovieList({ movies = [], isSearchActive = false }) {
             <li key={movie.id}>
               <Link
                 to={`/movies/${movie.id}`}
-                state={{ fromSearch: isSearchActive }}
+                state={isSearchActive ? { from: "movies", query: new URLSearchParams(window.location.search).get("query") } : { from: "trending" }}
                 className={s.movie}
               >
                 {movie.title}
