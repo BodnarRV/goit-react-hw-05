@@ -39,7 +39,7 @@ export default function MovieList({ movies = [], isSearchActive = false }) {
             </li>
           ))
         ) : (
-          <div></div>
+          !isSearchActive && <li>No movies found.</li>
         )}
       </ul>
     </div>
