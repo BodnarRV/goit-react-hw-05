@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate, useLocation, Link, Outlet } from "react-router-dom";
 import { fetchMovieDetails } from "../../api";
 import s from "./MovieDetailsPage.module.css";
@@ -8,10 +8,12 @@ export default function MovieDetailsPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [details, setDetails] = useState({});
-  
-  const previousPath = location.state?.from === "movies"
-    ? `/movies?query=${location.state.query}`
-    : "/";
+  const previousLocationRef = useRef(location.state);
+
+  const previousPath =
+    previousLocationRef.current?.from === "home"
+      ? "/"
+      : `/movies?query=${previousLocationRef.current?.query || ""}`;
 
   useEffect(() => {
     const getMovieDetails = async () => {
@@ -76,12 +78,12 @@ export default function MovieDetailsPage() {
         <h3>Additional information</h3>
         <ul>
           <li className={s.more}>
-            <Link to="cast" state={{ from: location.state?.from, query: location.state?.query }} className={s.movie}>
+            <Link to="cast" state={previousLocationRef.current} className={s.movie}>
               Cast
             </Link>
           </li>
           <li className={s.more}>
-            <Link to="reviews" state={{ from: location.state?.from, query: location.state?.query }} className={s.movie}>
+            <Link to="reviews" state={previousLocationRef.current} className={s.movie}>
               Reviews
             </Link>
           </li>

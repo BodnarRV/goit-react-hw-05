@@ -1,20 +1,19 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import s from "./MoviesPage.module.css";
-import { searchMovies } from "../../api";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
+import { searchMovies, fetchTrendingMovies } from "../../api";
 import MovieList from "../../components/MovieList/MovieList";
+import s from "./MoviesPage.module.css";
 
 export default function MoviesPage() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const queryParam = new URLSearchParams(location.search).get("query") || "";
+  const [searchParams, setSearchParams] = useSearchParams();
+  const queryParam = searchParams.get("query") || "";
   const [searchTerm, setSearchTerm] = useState(queryParam);
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     if (queryParam) {
       handleSearch(queryParam);
-    }
+    } 
   }, [queryParam]);
 
   const handleSearch = async (query) => {
@@ -22,7 +21,6 @@ export default function MoviesPage() {
     try {
       const searchedMovies = await searchMovies(query.trim());
       setMovies(searchedMovies);
-      localStorage.setItem("searchedMovies", JSON.stringify(searchedMovies));
     } catch (error) {
       console.error("Search error:", error);
     }
@@ -34,7 +32,7 @@ export default function MoviesPage() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    navigate(`/movies?query=${searchTerm.trim()}`);
+    setSearchParams({ query: searchTerm.trim() });
   };
 
   return (
@@ -51,7 +49,11 @@ export default function MoviesPage() {
           Search
         </button>
       </form>
-      <MovieList movies={movies} isSearchActive={true} />
+      <MovieList
+        movies={movies}
+        from="movies"
+        searchTerm={searchTerm}
+      />
     </div>
   );
 }
